@@ -1,12 +1,9 @@
-from openerp.osv import osv, fields
+from openerp import models, fields
 
 
-class auth_oauth_provider(osv.osv):
-    """"""
+class AuthOauthProvider(models.Model):
 
     _inherit = 'auth.oauth.provider'
 
-    _columns = {
-        'client_secret': fields.char('Client Secret',
-                                     help='The client secret you received'),
-    }
+    client_secret = fields.Char('Client Secret',
+                                help='The client secret you received')

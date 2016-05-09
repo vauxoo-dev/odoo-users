@@ -34,7 +34,7 @@ def fragment_to_query_string(func):
     return wrapper
 
 
-class OAuthController(OAuthController):
+class OAuthControllerInherit(OAuthController):
 
     @http.route('/auth_oauth/signin', type='http', auth='none')
     @fragment_to_query_string
@@ -57,10 +57,10 @@ class OAuthController(OAuthController):
                         url = endpoint + '&' + params
                     else:
                         url = endpoint + '?' + params
-                    f = urllib2.urlopen(url)
-                    response = f.read()
+                    furl = urllib2.urlopen(url)
+                    response = furl.read()
                     response = werkzeug.url_decode(response)
                     kw.update({'access_token': response.get('access_token')})
-        return super(OAuthController, self).signin(**kw)
+        return super(OAuthControllerInherit, self).signin(**kw)
 
 # vim:expandtab:tabstop=4:softtabstop=4:shiftwidth=4:
