@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -25,7 +25,7 @@ from openerp import models, fields, api, _
 from openerp import osv
 
 
-class merge_object(models.Model):
+class MergeObject(models.Model):
     _name = "merge.object"
 
     name = fields.Char("Name", size=64, required=True, select=1)
@@ -151,6 +151,3 @@ class merge_object(models.Model):
                 raise osv.except_osv(_("Warning"),
                                      _("Deletion of the action record "
                                        "failed."))
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

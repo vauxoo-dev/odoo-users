@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import functools
 import urllib2
 import logging
@@ -62,5 +63,3 @@ class OAuthControllerInherit(OAuthController):
                     response = werkzeug.url_decode(response)
                     kw.update({'access_token': response.get('access_token')})
         return super(OAuthControllerInherit, self).signin(**kw)
-
-# vim:expandtab:tabstop=4:softtabstop=4:shiftwidth=4:

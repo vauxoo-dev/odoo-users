@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding: utf-8
 ##############################################################################
 #
 #    OpenERP, Open Source Management Solution
@@ -89,9 +89,9 @@ class MergeFuseWizard(models.TransientModel):
             # get the models related to the one to fuse
             can = True
             for related in models_obj.browse(cr, uid, related_ids):
-                cr.commit()
                 to_unlink = []
                 target_ids = []
+                cr.commit()
                 target_model = self.pool.get(related.model)
                 field_obj = target_model and target_model.\
                     _fields.get(related.name)
@@ -137,11 +137,9 @@ class MergeFuseWizard(models.TransientModel):
                         if error.message.find('cannot update view') >= 0:
                             continue
                         can = False
-                cr.commit()
             if can:
                 to_unlink = list(set(active_ids) - set([base_id]))
                 model_obj.unlink(cr, uid, to_unlink)
-                cr.commit()
         result = super(MergeFuseWizard, self).create(cr, uid, {}, context)
         return result
 
@@ -405,7 +403,6 @@ class MergeEditingWizard(models.TransientModel):
             root = xml_form.getroottree()
             result['arch'] = etree.tostring(root)
             result['fields'] = all_fields
-            print result
         return result
 
     def create(self, cr, uid, vals, context=None):
@@ -439,6 +436,3 @@ class MergeEditingWizard(models.TransientModel):
     @api.multi
     def action_apply(self):
         return {'type': 'ir.actions.act_window_close'}
-
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
