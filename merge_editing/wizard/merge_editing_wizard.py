@@ -20,22 +20,21 @@
 #
 ##############################################################################
 
-from openerp import api, models
+from openerp import api, models, tools
 from lxml import etree
-from openerp import tools
 
 
-class merge_fuse_wizard(models.TransientModel):
+class MergeFuseWizard(models.TransientModel):
     _name = 'merge.fuse.wizard'
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
-        result = super(merge_fuse_wizard, self).fields_view_get(cr, uid,
-                                                                view_id,
-                                                                view_type,
-                                                                context,
-                                                                toolbar,
-                                                                submenu)
+        result = super(MergeFuseWizard, self).fields_view_get(cr, uid,
+                                                              view_id,
+                                                              view_type,
+                                                              context,
+                                                              toolbar,
+                                                              submenu)
         if context.get('merge_fuse_object'):
             merge_object = self.pool.get('merge.object')
             fuse_data = merge_object.browse(cr, uid,
@@ -127,28 +126,23 @@ class merge_fuse_wizard(models.TransientModel):
                     target_ids = target_model and \
                         target_model.\
                         search(cr, uid, [(related.name, 'in', active_ids)])
-                    if target_ids:
-                        try:
-                            if field_obj.type in ('many2many', 'one2many'):
-                                target_model.\
-                                    write(cr, uid, target_ids,
-                                          {str(related.name): [(4, base_id)]})
-                            else:
-                                target_model.write(cr, uid,
-                                                   target_ids,
-                                                   {str(related.name):
-                                                    base_id})
-                        except BaseException as e:
-                            if 'cannot update view' in e.message:
-                                continue
-                            else:
-                                can = False
+                    try:
+                        target_ids and target_model.\
+                            write(cr, uid, target_ids,
+                                  {str(related.name):
+                                   (field_obj.type in
+                                    ('many2many', 'one2many') and
+                                    [(4, base_id)] or base_id)})
+                    except BaseException as error:
+                        if error.message.find('cannot update view') >= 0:
+                            continue
+                        can = False
                 cr.commit()
             if can:
                 to_unlink = list(set(active_ids) - set([base_id]))
                 model_obj.unlink(cr, uid, to_unlink)
                 cr.commit()
-        result = super(merge_fuse_wizard, self).create(cr, uid, {}, context)
+        result = super(MergeFuseWizard, self).create(cr, uid, {}, context)
         return result
 
     @api.multi
@@ -156,17 +150,17 @@ class merge_fuse_wizard(models.TransientModel):
         return {'type': 'ir.actions.act_window_close'}
 
 
-class merge_editing_wizard(models.TransientModel):
+class MergeEditingWizard(models.TransientModel):
     _name = 'merge.editing.wizard'
 
     def fields_view_get(self, cr, uid, view_id=None, view_type='form',
                         context=None, toolbar=False, submenu=False):
-        result = super(merge_editing_wizard, self).fields_view_get(cr, uid,
-                                                                   view_id,
-                                                                   view_type,
-                                                                   context,
-                                                                   toolbar,
-                                                                   submenu)
+        result = super(MergeEditingWizard, self).fields_view_get(cr, uid,
+                                                                 view_id,
+                                                                 view_type,
+                                                                 context,
+                                                                 toolbar,
+                                                                 submenu)
         if context.get('merge_editing_object'):
             merge_object = self.pool.get('merge.object')
             editing_data = merge_object.\
@@ -275,7 +269,6 @@ class merge_editing_wizard(models.TransientModel):
                         xml_group, 'field', {
                             'name': "selection_" +
                             field.name,
-                            'colspan': '2',
                             'colspan': '2'})
                     etree.SubElement(
                         xml_group,
@@ -417,31 +410,30 @@ class merge_editing_wizard(models.TransientModel):
 
     def create(self, cr, uid, vals, context=None):
         if context.get('active_model') and context.get('active_ids'):
-            print "Modelo activo", context.get('active_model')
             model_obj = self.pool.get(context.get('active_model'))
-            dict = {}
+            dict_cr = {}
             for key, val in vals.items():
                 if key.startswith('selection_'):
                     split_key = key.split('_', 1)[1]
                     if val == 'set':
-                        dict.update({split_key: vals.get(split_key, False)})
+                        dict_cr.update({split_key: vals.get(split_key, False)})
                     elif val == 'remove':
-                        dict.update({split_key: False})
+                        dict_cr.update({split_key: False})
                     elif val == 'remove_m2m':
-                        dict.update({split_key: [(5, 0, [])]})
+                        dict_cr.update({split_key: [(5, 0, [])]})
                     elif val == 'add':
                         m2m_list = []
                         for m2m_id in vals.get(split_key, False)[0][2]:
                             m2m_list.append((4, m2m_id))
-                        dict.update({split_key: m2m_list})
-            if dict:
+                        dict_cr.update({split_key: m2m_list})
+            if dict_cr:
                 model_obj.write(
                     cr,
                     uid,
                     context.get('active_ids'),
-                    dict,
+                    dict_cr,
                     context)
-        result = super(merge_editing_wizard, self).create(cr, uid, {}, context)
+        result = super(MergeEditingWizard, self).create(cr, uid, {}, context)
         return result
 
     @api.multi
