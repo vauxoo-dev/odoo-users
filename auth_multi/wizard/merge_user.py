@@ -346,10 +346,13 @@ class MergeUserForLogin(models.Model):
             merge_brw = merge_ids and merge_ids[0]
             if all([i.authorized for i in merge_brw.user_ids]):
                 user_ids = [i.user_id.id for i in merge_brw.user_ids]
-                user_ids.insert(0, parent_brw.id)
-                fuse_obj.sudo().with_context({'active_model': 'res.users',
-                                              'active_ids': user_ids}).\
+                fuse_id = fuse_obj.sudo().\
+                    with_context({'active_model': 'res.users',
+                                  'active_id': parent_brw.id,
+                                  'active_ids': user_ids}).\
                     create({})
+                fuse_id.merge_records('res_users', parent_brw.id, user_ids,
+                                      'res.users')
                 merge_brw.write({
                     'executed': True
                 })

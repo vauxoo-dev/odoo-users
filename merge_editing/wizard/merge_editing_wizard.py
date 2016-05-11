@@ -75,7 +75,7 @@ class MergeFuseWizard(models.TransientModel):
 
     @api.multi
     def merge_records(self, table, main_id, old_ids, orm_model):
-        '''Method used to merge records in all tables with
+        """Method used to merge records in all tables with
         a reference to the objects to merge
         @param tabel: Table name of the records to merge. i.e. res_users
         @type tabel: str or unicode
@@ -86,7 +86,7 @@ class MergeFuseWizard(models.TransientModel):
         @type old_ids: list or tuple
         @param orm_model: Name of the model for the orm. i.e. res.users
         @type orm_model: str or unicode
-        '''
+        """
 
         self._cr.execute('''
 DROP FUNCTION IF EXISTS merge_records(model varchar, main_id integer,
@@ -121,18 +121,22 @@ RETURNS float AS $$
                            AND con.contype = 'f' LOOP
             FOREACH record_id SLICE 0 IN ARRAY old_ids LOOP
                 proper_id := (SELECT id
-                            FROM ir_property
-                            WHERE res_id = orm_model|| ',' || record_id);
+                              FROM ir_property
+                              WHERE res_id = orm_model|| ',' ||
+                                             record_id LIMIT 1);
                 IF proper_id is not null THEN
-                    UPDATE ir_property SET res_id = orm_model|| ',' || main_id;
+                    UPDATE ir_property
+                    SET res_id = orm_model|| ',' || main_id
+                    WHERE res_id = orm_model|| ',' || record_id    ;
                 END IF;
                 proper_id := (SELECT id
                             FROM ir_property
                             WHERE value_reference = orm_model|| ',' ||
-                                    record_id);
+                                    record_id LIMIT 1);
                 IF proper_id is not null THEN
                     UPDATE ir_property
-                    SET value_reference = orm_model|| ',' || main_id;
+                    SET value_reference = orm_model|| ',' || main_id
+                    WHERE value_reference = orm_model|| ',' || record_id;
                 END IF;
                 BEGIN
                     EXECUTE 'UPDATE ' || value_table ||
