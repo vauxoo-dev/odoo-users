@@ -85,5 +85,12 @@
 
             </t>
         </template>
+       <template id="assets_backend" name="auth_multi assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <script type="text/javascript" src="/auth_multi/static/src/js/tests.js"></script>
+            </xpath>
+        </template>
+
+
     </data>
 </openerp>

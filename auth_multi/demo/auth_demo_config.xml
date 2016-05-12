@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <!-- Set enable the login with google -->
+        <record id="auth_oauth.provider_google" model="auth.oauth.provider">
+            <field name="enabled" eval="True"/>
+            <field name="client_id">923513523547.apps.googleusercontent.com</field>
+        </record>
+        <!-- Changing the configuration to set available the login with oauth -->
+        <record id="oauth_general_settings" model="base.config.settings">
+            <field name="auth_signup_uninvited" eval="True"/>
+            <field name="auth_signup_template_user_id" ref="auth_signup.default_template_user"/>
+        </record>
+
+        <function model="base.config.settings" name="execute" eval="[[ref('oauth_general_settings')]]"/>
+    </data>
+</openerp>

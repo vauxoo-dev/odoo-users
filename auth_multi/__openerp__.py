@@ -32,6 +32,7 @@
         'merge_editing',
         'auth_signup',
     ],
+    'demo': ['demo/auth_demo_config.xml'],
     'data': [
         'data/website_crm_data.xml',
         'security/log_security.xml',
