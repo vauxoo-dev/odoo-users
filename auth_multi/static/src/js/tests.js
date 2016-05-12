@@ -10,7 +10,7 @@ odoo.define('auth_multi.tour', function (require) {
         steps: [
             {
                 title: 'Wait for login and redirect',
-                wait: 9000,
+                wait: 3000,
             },
             {
                 title: 'Show the main window for the user',

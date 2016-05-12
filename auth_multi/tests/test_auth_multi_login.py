@@ -40,7 +40,7 @@ class TestOauthMulti(openerp.tests.HttpCase):
         token = 'ya29.CjXgA59Z3ezBdP_Bki4fth6FtrG9Nw'
         domain = self.env['ir.config_parameter'].get_param('web.base.url')
         path = '/auth_oauth/signin?state=%7B%22p%22:+3,+%22r%22:+%22'\
-            'http%253A%252F%252F{domain}%252Fweb%22,+%22d%22:+%22'\
+            '{domain}%252Fweb%22,+%22d%22:+%22'\
             'auth2%22%7D&access_token={token}&token_type=Bearer'\
             '&expires_in=3600'.\
             format(domain=domain, token=token)
