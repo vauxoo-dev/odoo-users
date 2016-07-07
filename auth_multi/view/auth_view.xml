@@ -85,8 +85,8 @@
 
             </t>
         </template>
-       <template id="assets_backend" name="auth_multi assets" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
+       <template id="assets_backend" name="auth_multi assets" inherit_id="web.assets_common">
+            <xpath expr="//script[last()]" position="after">
                 <script type="text/javascript" src="/auth_multi/static/src/js/tests.js"></script>
             </xpath>
         </template>

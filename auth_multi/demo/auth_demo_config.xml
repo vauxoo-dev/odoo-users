@@ -14,4 +14,15 @@
 
         <function model="base.config.settings" name="execute" eval="[[ref('oauth_general_settings')]]"/>
     </data>
+    <data>
+       <template id="login_layout" name="Login Layout" inherit_id="web.login_layout">
+            <xpath expr="//script[last()]" position="after">
+                <t t-call-assets="web.assets_common" t-js='false'/>
+                <t t-call-assets="web.assets_common" t-css='false'/>
+                <t t-call="web.bootstrap"/>
+                <script type="text/javascript" src="/web/static/src/js/framework/session.js"></script>
+                <script type="text/javascript" src="/web/static/src/js/framework/session_instance.js"></script>
+            </xpath>
+        </template>
+    </data>
 </openerp>
