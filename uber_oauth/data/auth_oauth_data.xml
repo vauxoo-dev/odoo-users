@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<openerp>
+    <data noupdate="1">
+        <record id="provider_uber" model="auth.oauth.provider">
+            <field name="name">uber OAuth2</field>
+            <field name="auth_endpoint">https://login.uber.com/oauth/v2/authorize</field>
+            <field name="scope">profile</field>
+            <field name="validation_endpoint">https://api.uber.com/v1.2/me</field>
+            <field name="data_endpoint"></field>
+            <field name="url_get_token">https://login.uber.com/oauth/v2/token</field>
+            <field name="body">Log in with Uber</field>
+        </record>
+    </data>
+</openerp>
