@@ -20,7 +20,7 @@
 ##############################################################################
 {
     'name': 'Auth Multi Login',
-    'version': '8.0.0.1.0',
+    'version': '10.0.0.1.0',
     'author': 'Vauxoo',
     'category': 'Hidden',
     'website': 'http://www.vauxoo.com',
@@ -40,7 +40,7 @@
         'view/auth_view.xml',
         'wizard/merge_user_view.xml',
     ],
-    'installable': True,
+    'installable': False,
     'auto_install': False,
     'web_preload': False,
 }
