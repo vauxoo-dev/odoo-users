@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import urllib2
-import logging
-import simplejson
+# pylint: disable=W1648
 import urlparse
+import requests
+import simplejson
 import werkzeug.utils
 
 from odoo import SUPERUSER_ID, api
@@ -10,9 +10,6 @@ from odoo import http
 from odoo import registry as registry_get
 from odoo.addons.auth_oauth.controllers.main import (OAuthController,
                                                      fragment_to_query_string)
-
-
-_logger = logging.getLogger(__name__)
 
 
 class OAuthControllerInherit(OAuthController):
@@ -40,8 +37,7 @@ class OAuthControllerInherit(OAuthController):
                         url = endpoint + '&' + params
                     else:
                         url = endpoint + '?' + params
-                    furl = urllib2.urlopen(url)
-                    response = furl.read()
-                    response = werkzeug.url_decode(response)
+                    furl = requests.get(url)
+                    response = furl.json() if furl.status_code == 200 else {}
                     kw.update({'access_token': response.get('access_token')})
         return super(OAuthControllerInherit, self).signin(**kw)

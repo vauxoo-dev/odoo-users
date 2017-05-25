@@ -29,8 +29,14 @@
     'depends': [
         'auth_oauth',
         'auth_signup',
+        'secret_key_auth',
     ],
     'data': [
+        'security/ir.model.access.csv',
+        'security/groups.xml',
+        'data/auth_oauth_data.xml',
+        'view/res_partner_view.xml',
+        'view/uber_trips_view.xml',
     ],
     'installable': True,
     'auto_install': False,
