@@ -4,6 +4,7 @@ import urlparse
 import requests
 import simplejson
 import werkzeug.utils
+from urlparse import parse_qsl
 
 from odoo import SUPERUSER_ID, api
 from odoo import http
@@ -38,6 +39,8 @@ class OAuthControllerInherit(OAuthController):
                     else:
                         url = endpoint + '?' + params
                     furl = requests.get(url)
-                    response = furl.json() if furl.status_code == 200 else {}
+                    response = dict(
+                        parse_qsl(furl.text)
+                    ) if furl.status_code == 200 else {}
                     kw.update({'access_token': response.get('access_token')})
         return super(OAuthControllerInherit, self).signin(**kw)
