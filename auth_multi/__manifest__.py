@@ -43,4 +43,9 @@
     'installable': True,
     'auto_install': False,
     'web_preload': False,
+    'external_dependencies': {
+        'python': [
+            'simplejson',
+        ],
+    },
 }
