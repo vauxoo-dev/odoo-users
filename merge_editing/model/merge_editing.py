@@ -37,10 +37,6 @@ class MergeObject(models.Model):
                                         help="Sidebar action to make this "
                                         "template available on records "
                                         "of the related document model")
-    ref_ir_value = fields.Many2one('ir.values', 'Sidebar button',
-                                   readonly=True,
-                                   help="Sidebar button to open the "
-                                   "sidebar action")
     ref_ir_act_window_fuse = fields.Many2one('ir.actions.act_window',
                                              'Sidebar fuse action',
                                              readonly=True,
@@ -120,33 +116,22 @@ class MergeObject(models.Model):
                 'context': "{'merge_editing_object' : %d}" % (self.id),
                 'view_mode': 'form,tree',
                 'target': 'new',
-                'auto_refresh': 1
+                'auto_refresh': 1,
+                'binding_model_id': self.model_id.id,
             })
-            vals['ref_ir_value'] = self.env['ir.values'].create({
-                'name': button_name,
-                'model': src_obj,
-                'key2': 'client_action_multi',
-                'value': ("ir.actions.act_window," +
-                          str(vals['ref_ir_act_window'])),
-                'object': True,
-                })
             record.write({
                 'ref_ir_act_window': vals.get('ref_ir_act_window',
                                               False),
-                'ref_ir_value': vals.get('ref_ir_value', False)
             })
 
     @api.multi
     def unlink_action(self):
         action_env = self.env['ir.actions.act_window']
-        ir_values_obj = self.env['ir.values']
         for record in self:
             try:
                 if record.ref_ir_act_window:
                     action_env.\
                         unlink(record.ref_ir_act_window.id)
-                if self.ref_ir_value:
-                    ir_values_obj.unlink(record.ref_ir_value.id)
             except:
                 raise UserError(_("Warning"),
                                 _("Deletion of the action record "

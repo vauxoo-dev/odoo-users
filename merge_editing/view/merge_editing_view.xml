@@ -26,7 +26,6 @@
                                     colspan="2" attrs="{'invisible':[('ref_ir_act_window_fuse','!=',False)]}"
                                     help="Dislplay the button in the sidebar that fuses the selected elements"/>
                             <field name="ref_ir_act_window" attrs="{'invisible':[('ref_ir_act_window','=',False)]}"/>
-                            <field name="ref_ir_value" attrs="{'invisible':[('ref_ir_act_window','=',False)]}"/>
                             <field name="ref_ir_act_window_fuse" attrs="{'invisible':[('ref_ir_act_window_fuse','=',False)]}"/>
                             <field name="ref_ir_value_fuse" attrs="{'invisible':[('ref_ir_act_window_fuse','=',False)]}"/>
                             <button name="unlink_action" string="Remove sidebar button" type="object" icon="gtk-delete"
