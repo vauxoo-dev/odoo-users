@@ -44,10 +44,6 @@ class MergeObject(models.Model):
                                              "this template available on "
                                              "records of the related "
                                              "document model")
-    ref_ir_value_fuse = fields.Many2one('ir.values', 'Sidebar fuse button',
-                                        readonly=True,
-                                        help="Sidebar button to open "
-                                        "the sidebar action")
     model_list = fields.Char('Model List', size=256)
     fuse = fields.Boolean('fuse elements', required=False)
 
@@ -83,21 +79,12 @@ class MergeObject(models.Model):
                 'context': "{'merge_fuse_object' : %d}" % (self.id),
                 'view_mode': 'form,tree',
                 'target': 'new',
-                'auto_refresh': 1
+                'auto_refresh': 1,
+                'binding_model_id': self.model_id.id,
             })
-            vals['ref_ir_value_fuse'] = self.env['ir.values'].\
-                create({
-                    'name': button_name,
-                    'model': src_obj,
-                    'key2': 'client_action_multi',
-                    'value': ("ir.actions.act_window," +
-                              str(vals['ref_ir_act_window_fuse'])),
-                    'object': True,
-                })
             record.write({
                 'ref_ir_act_window_fuse': vals.get('ref_ir_act_window_fuse',
                                                    False),
-                'ref_ir_value_fuse': vals.get('ref_ir_value_fuse', False),
             })
 
     @api.multi
