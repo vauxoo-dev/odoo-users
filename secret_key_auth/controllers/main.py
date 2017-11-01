@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=W1648
-import urlparse
-from urlparse import parse_qsl
+from urllib.parse import parse_qsl
 import requests
 import simplejson
 import werkzeug.utils
@@ -34,7 +33,7 @@ class OAuthControllerInherit(OAuthController):
                     'client_secret': p_brw.client_secret})
                 endpoint = p_brw.url_get_token
                 if endpoint:
-                    if urlparse.urlparse(endpoint)[4]:
+                    if werkzeug.urls.urlparse(endpoint)[4]:
                         url = endpoint + '&' + params
                     else:
                         url = endpoint + '?' + params
