@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import division
-import urlparse
 import base64
 import werkzeug.urls
 import requests
@@ -75,7 +74,7 @@ class ResUsers(models.Model):
         if uber.id != provider:
             return res
         if (validation.get('picture') and
-                urlparse.urlparse(validation.get('picture')).scheme):
+                werkzeug.urls.urlparse(validation.get('picture')).scheme):
             res.update(
                 {'image': base64.b64encode(
                     requests.get(validation.get('picture')).content)})
