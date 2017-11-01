@@ -201,7 +201,7 @@ class ResUsers(models.Model):
 
             try:
                 _, login, _ = self.signup(values, token)
-            except AccessDenied, access_denied_exception:
+            except AccessDenied as access_denied_exception:
                 raise access_denied_exception
 
         else:
