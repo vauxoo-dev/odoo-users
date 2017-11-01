@@ -23,14 +23,6 @@
     "version": "10.0.0.1.0",
     'author': 'Vauxoo',
     'category': 'Hidden',
-    'description': """
-Auth wit Facebook API
-=====================
-
-Update the main data provider with the correct url to do login with Facebook
-
-
-    """,
     'website': 'http://www.vauxoo.com',
     'images': [],
     'depends': [
