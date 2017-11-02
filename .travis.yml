@@ -21,7 +21,7 @@ addons:
       - python-xlrd
 
 python:
-  - "2.7"
+  - "3.5"
 
 env:
   global:
@@ -29,9 +29,6 @@ env:
   matrix:
   - LINT_CHECK=1
   - TESTS="1"
-
-virtualenv:
-  system_site_packages: true
 
 install:
   - git clone --single-branch --depth=1 https://github.com/vauxoo/maintainer-quality-tools.git -b master ${HOME}/maintainer-quality-tools
