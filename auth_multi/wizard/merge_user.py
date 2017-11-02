@@ -31,24 +31,21 @@ import re
 class MergeUserForLoginLine(models.Model):
     _name = 'merge.user.for.login.line'
 
-    same_email = fields.Boolean('Same Email',
-                                help='To identifed if this '
+    same_email = fields.Boolean(help='To identifed if this '
                                 'line has the same email')
     user_id = fields.Many2one('res.users', 'Main User',
                               help='Main users, result of all '
                                    'process')
-    login = fields.Many2one('merge.user.for.login', 'Login')
-    authorized = fields.Boolean('Authorized',
-                                help='True if this line was authorized')
+    login = fields.Many2one('merge.user.for.login')
+    authorized = fields.Boolean(help='True if this line was authorized')
 
 
 class MergeUserForLogin(models.Model):
     _name = 'merge.user.for.login'
     _description = 'Merge Login'
 
-    executed = fields.Boolean('Excecuted',
-                              help='True if this line was merged')
-    message = fields.Text('Message', help='Info about search')
+    executed = fields.Boolean(help='True if this line was merged')
+    message = fields.Text(help='Info about search')
     search_c = fields.Char('Criterial',
                            help='Name or  email to search')
     user_id = fields.Many2one('res.users', 'Main User',
@@ -64,7 +61,7 @@ class MergeUserForLogin(models.Model):
                             default='email',
                             help='Criterial search to '
                             'determinate if an user is duplicated')
-    access_token = fields.Char('Access Token')
+    access_token = fields.Char()
 
     _rec_name = 'access_token'
 
