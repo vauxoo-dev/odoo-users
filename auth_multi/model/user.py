@@ -72,7 +72,6 @@ class ResUsers(models.Model):
                                    'do login with many Oauth APIs')
     my_contacts = fields.One2many('res.partner',
                                   compute='_compute_my_contacts',
-                                  string='My Contacts',
                                   help='All my Contacts Partner')
 
     @api.multi
