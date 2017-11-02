@@ -20,9 +20,9 @@
 #
 ##############################################################################
 
+import re
 from odoo import api, models, tools
 from lxml import etree
-import re
 
 
 class MergeFuseWizard(models.TransientModel):
