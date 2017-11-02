@@ -24,6 +24,7 @@
     'author': 'Vauxoo',
     'category': 'Hidden',
     'website': 'http://www.vauxoo.com',
+    'license': 'AGPL-3',
     'images': [],
     'depends': [
         'auth_oauth',
