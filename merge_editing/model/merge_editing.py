@@ -28,7 +28,7 @@ from odoo.exceptions import UserError
 class MergeObject(models.Model):
     _name = "merge.object"
 
-    name = fields.Char("Name", size=64, required=True, index=1)
+    name = fields.Char(size=64, required=True, index=1)
     model_id = fields.Many2one('ir.model', 'Model', required=True, index=1)
     field_ids = fields.Many2many('ir.model.fields', 'merge_field_rel',
                                  'merge_id', 'field_id', 'Fields')
@@ -44,7 +44,7 @@ class MergeObject(models.Model):
                                              "this template available on "
                                              "records of the related "
                                              "document model")
-    model_list = fields.Char('Model List', size=256)
+    model_list = fields.Char(size=256)
     fuse = fields.Boolean('fuse elements', required=False)
 
     @api.multi
