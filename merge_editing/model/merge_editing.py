@@ -119,7 +119,9 @@ class MergeObject(models.Model):
                 if record.ref_ir_act_window:
                     action_env.\
                         unlink(record.ref_ir_act_window.id)
-            except:
+            except:  # pylint: disable=E722
+                # TODO review what kind of exception is, doc said is
+                # AccessError and UserError
                 raise UserError(_("Warning"),
                                 _("Deletion of the action record "
                                   "failed."))
