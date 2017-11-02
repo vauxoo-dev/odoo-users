@@ -21,11 +21,11 @@
 
 import os
 import binascii
+import re
 from odoo import tools, models, api, _, fields
 from odoo.exceptions import UserError
 from odoo.addons.mail.models.mail_template import mako_template_env
 from odoo.tools.safe_eval import safe_eval
-import re
 
 
 class MergeUserForLoginLine(models.Model):
