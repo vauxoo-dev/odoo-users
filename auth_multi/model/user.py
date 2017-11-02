@@ -58,7 +58,7 @@ class ResUsers(models.Model):
     _inherit = 'res.users'
 
     @api.multi
-    def _search_my_contacs(self):
+    def _compute_my_contacts(self):
         partner_obj = self.env['res.partner']
         for user_brw in self:
             partner_id = user_brw.partner_id and user_brw.partner_id.id
@@ -71,7 +71,7 @@ class ResUsers(models.Model):
                                    help='Tokens that allow '
                                    'do login with many Oauth APIs')
     my_contacts = fields.One2many('res.partner',
-                                  compute='_search_my_contacs',
+                                  compute='_compute_my_contacts',
                                   string='My Contacts',
                                   help='All my Contacts Partner')
 
