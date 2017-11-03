@@ -261,8 +261,7 @@ class UserLogGroups(models.Model):
 
     name = fields.Many2one('res.users', 'User',
                            help='Users with changes in their groups')
-    date = fields.Datetime('Date',
-                           help='Date of last change in the groups')
+    date = fields.Datetime(help='Date of last change in the groups')
     group_ids = fields.Many2many('res.groups',
                                  'log_groups_users_rel',
                                  'uid', 'gid',
